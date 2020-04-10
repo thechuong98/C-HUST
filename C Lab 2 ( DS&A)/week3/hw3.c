@@ -1,0 +1,65 @@
+/*Display the content of the file*/
+
+#include <stdio.h>
+#include <string.h>
+
+void DisplayAll(char *fn) {
+
+	FILE *f = fopen(fn, "r");
+
+	if (f == NULL)
+		printf("\nCan not open file!\n");
+	else {
+		char tempStr[100];
+
+		while (fgets(tempStr, 100, f) != NULL) {
+			printf("%s", tempStr);
+		}
+	}
+	fclose(f);
+	return;
+}
+
+void displayPageByPage(char *fn) {
+
+	// a page == 25 lines
+	
+	FILE *f = fopen(fn, "r");
+
+	if (f == NULL)
+		printf("\nCan not open file!\n");
+	else {
+		char tempStr[100];
+		int count = 0; // the number of lines printed in page
+
+		while (fgets(tempStr, 100, f) != NULL) {
+			count++;
+
+			if (count < 25)
+				printf("%s", tempStr);
+			else if (count == 25) {
+				printf("%s", tempStr);
+				printf("\n--> Next page (Enter)\n");
+				while (getchar() != '\n'); // wait user press enter
+				count = 0; // reset to number of lines printed
+			}
+			
+		}
+	}
+	printf("\n");
+	fclose(f);
+	return;
+}
+
+int main(int argc, char *argv[]) {
+
+	if (argc == 2)
+		DisplayAll(argv[1]);
+	else if ((argc == 3) && (strcmp(argv[1], "-p") == 0))
+		displayPageByPage(argv[2]);
+	else
+		printf("'cat filename' to display the file's content, 'cat -p filename' to display the file's content PageByPage\n");
+
+	
+	return(0);
+}

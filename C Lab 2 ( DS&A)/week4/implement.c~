@@ -1,0 +1,12 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void my_strcat(char *s1, char *s2){
+  size_t size_s1 = strlen(s1);
+  s1 = (char *)realloc(s1, 
+}
+
+int main(){
+  
+}

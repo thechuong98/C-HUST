@@ -1,0 +1,24 @@
+/*HOMEWORK ICT55*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char* subStr(char *s1, int offset, int number){
+	char *subStr = malloc(sizeof (char) * 100); 
+	// char subStr[100]; cause error because it a local var, it will not be allocate after the end of the function
+	if(number > strlen(s1) - offset){
+		return (s1+offset);
+	}
+	else {
+		for(int i = 0; i < number; ++i){
+			subStr[i] = s1[offset+i];
+		}
+	}
+	return subStr;
+}
+
+int main(){
+	char *s1 = "abcdef";
+	printf("%s", subStr(s1, 2, 2));
+}
+

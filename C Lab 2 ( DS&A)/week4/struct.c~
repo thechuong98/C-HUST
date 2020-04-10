@@ -1,0 +1,11 @@
+#include<stdio.h>
+
+typedef struct point{
+  double x;
+  double y;
+} point_t;
+
+typedef struct circle{
+  point_t center;
+  double radius;
+} circle_t;

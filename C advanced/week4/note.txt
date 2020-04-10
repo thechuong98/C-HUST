@@ -1,0 +1,7 @@
+create functions that facilitate the implementation of the main function -> More readable
+	Ex : *((long *)(e->a)) #dont
+		 getAfromE(*e) #do
+
+file phonebook.c should not highly depend on symboltable.c
+
+instead of using object, we use &object;

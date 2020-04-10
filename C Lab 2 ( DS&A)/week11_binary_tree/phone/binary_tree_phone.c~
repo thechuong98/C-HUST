@@ -1,0 +1,167 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+	char name[15];
+	char tele[12];
+	char email[30];
+} pAddress;
+
+typedef pAddress T;
+
+typedef struct treeNode{
+	T data;
+	struct treeNode *left;
+	struct treeNode *right;
+} treeNode;
+
+treeNode *newNode(T data){
+	treeNode *new = (treeNode *)malloc(sizeof(treeNode));
+	if(new == NULL){
+		printf("Out of memory!\n");
+		exit(1);
+	}
+	else{
+		new->left = NULL;
+		new->right = NULL;
+		new->data = data;
+	}
+	return new;
+}
+
+int countNode(treeNode *root){
+	if(root == NULL) return 0;
+	else return 1 + countNode(root->left) + countNode(root->right);
+}
+
+int addressCmp(pAddress a, pAddress b){
+	char *aEmail = strtok(a.email, "@");
+	char *bEmail = strtok(b.email, "@");
+	if(strcmp(aEmail, bEmail) < 0 ) return -1;
+	else if(strcmp(aEmail, bEmail) > 0) return 1;
+	else return 0;
+}
+
+void insertBST(treeNode **root, T data){
+	if(*root == NULL){
+		*root = newNode(data);
+		return;
+	}
+	else if(addressCmp(data, (*root)->data) < 0) insertBST(&(*root)->left, data);
+	else if(addressCmp(data, (*root)->data) > 0) insertBST(&(*root)->right, data);
+}
+
+treeNode *searchEmail(treeNode *root, char *email){
+	if(root == NULL){
+		printf("Cannot found\n");
+		exit(1);
+	}
+	char rootEmail[30];
+	strcpy(rootEmail, root->data.email);
+	char *rootEmailcut = strtok(rootEmail, "@");
+	char *Email = strtok(email, "@");
+	if(strcmp(rootEmailcut , Email) == 0) return root;
+	else if(strcmp(rootEmailcut , Email) < 0) return searchEmail(root->right, email);
+	else if(strcmp(rootEmailcut , Email) > 0) return searchEmail(root->left, email);
+}
+
+void printNode(FILE *stream, treeNode *node){
+	if(node == NULL) return;
+	fprintf(stream, "%s %s %s\n", node->data.name, node->data.tele, node->data.email);
+}
+
+void traversing(treeNode *root){
+	printNode(stdout, root);
+	if(root->left != NULL) {
+		printf("left of %s: ", root->data.name);
+		traversing(root->left);
+	}
+	if(root->right != NULL){
+		printf("right of %s: ", root->data.name);
+		traversing(root->right);
+	}
+}
+
+void printLDR(FILE *stream, treeNode *root){
+	if(root == NULL) return;
+	printLDR(stream, root->left);
+	printNode(stream, root);
+	printLDR(stream, root->right);
+}
+
+
+
+void txt2tree(char *fnIn, char *fnOut, T data[], int n, treeNode **root){
+  FILE *fi = fopen(fnIn, "r");
+  FILE *fo = fopen(fnOut, "w+b");
+
+  if(fi == NULL){
+    printf("cannot open the file.\n");
+    return;
+  }
+  for(int i = 0; i < n; ++i){
+    fscanf(fi, "%s", data[i].name);
+    fscanf(fi, "%s", data[i].tele);
+    fscanf(fi, "%s", data[i].email);
+    insertBST(root, data[i]);
+  }
+  fwrite(data, sizeof(T), n, fo);
+  fclose(fi);
+  fclose(fo);
+}
+
+int lineCounter(char *fn){
+  FILE *f = fopen(fn, "r");
+  if ( f == NULL){
+    printf("Cannot open the file\n");
+    return 0;
+  }
+  int numOfLines = 1;
+  char c;
+  while ((c = fgetc(f)) != EOF){
+    if (c == '\n') numOfLines++;
+  }
+  fclose(f);
+  return(numOfLines);
+}
+
+void readDatatoTree(char *fn, treeNode **root){
+  FILE *f = fopen(fn, "rb");
+  if(f == NULL){
+    printf("cannot open the file.\n");
+    return;
+  }
+  else{
+    while(!feof(f)){
+      treeNode *p = (treeNode *)malloc(sizeof(treeNode)); //tao 1 node p
+      fread(&p->data, sizeof(T), 1, f); // doc du lieu vao p->data
+      insertBST(root, p->data);
+    }
+    fclose(f);
+  }
+} 
+
+
+treeNode *findMin(treeNode *root){
+	if (root == NULL) return NULL;
+	treeNode *cur = root;
+	while(cur->left != NULL){
+		cur = cur->left;
+	}
+	return cur;
+}
+
+treeNode *findMax(treeNode *root){
+	if (root == NULL) return NULL;
+	treeNode *cur = root;
+	while(cur->right != NULL){
+		cur = cur->right;
+	}
+	return cur;
+}
+
+void deleteNode(treeNode **root, char *email){
+	treeNode *deletingNode = sea
+}
+

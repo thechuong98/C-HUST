@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef enum{FALSE, TRUE} bool;
+
+typedef struct phoneAdress{
+  char name[30];
+  char tele[20];
+} phoneAddress;
+
+typedef struct _listNode{
+  void *data;
+  struct _listNode *next;
+} listNode;
+
+typedef struct{
+  int elementSize;
+  listNode *head;
+  listNode *tail;
+} list;
+
+void list_new(list *list, int elementSize){
+  list->elementSize = elementSize;
+  list->head = list->tail = NULL;
+}
+
+void list_append(list *list, void *element){
+  listNode *node = malloc(sizeof(listNode));
+  node->data = malloc(list->elementSize);
+  memcpy(node->data, element, list->elementSize);
+  node->next = list->head;
+  list->head = node;
+  if(!list->tail){
+    list->tail = list->head;
+  }
+}
+
+bool iterate_string(void *data)
+{
+  phoneAddress *a = (phoneAddress *)data;
+  printf("Found string value: %s\n", a->name);
+  return TRUE;
+}
+
+
+
+int main(){
+  list list;
+  list_new(&list, sizeof(phoneAddress));
+  phoneAddress a;
+  strcpy(a.name, "Chu The Chuong");
+  strcpy(a.tele, "0981082834");
+  list_append(&list, &a);
+  iterate_string(list.head->data);
+}

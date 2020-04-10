@@ -1,0 +1,5 @@
+#include <stdio.h>
+
+//fopen FILE *fptr; fopen("name", "mode"); remember to compare with NULL;
+// "r+" = r+w(exist); "w+" = r+w (creat); "a+" creat or open to append;
+

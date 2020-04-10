@@ -1,0 +1,5 @@
+void clear_buffer(){
+    int ch;
+    while ((ch=getchar()) !='\n' && ch!=EOF);
+}
+

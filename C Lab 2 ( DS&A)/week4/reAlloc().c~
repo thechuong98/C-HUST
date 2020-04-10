@@ -1,0 +1,21 @@
+/*
+void *realloc(void *ptr, size_t size)
+ */
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(){
+  char *str;
+  /*Init memory allocation*/
+  str = (char *)mlloc(15);
+  strcpy(str, "tutorialspoint");
+  printf("String = %s, Adress = %u\n", str, str);
+
+  /*Reallocate memory*/
+  str = (char *)realloc(str, 25);
+  strcat(str, ".com");
+  printf("String = %s, Adress = %u\n", str, str);
+
+  free(str);
+  return 0;
+}

@@ -1,0 +1,80 @@
+#include "LIB/CSlist.h"
+#include "LIB/Cstack.h"
+#include "LIB/Cqueue.h"
+#include "LIB/CbinaryTree.h"
+
+typedef struct pack{
+  int id;
+  char toy[30];
+} pack;
+
+int cmp_id(void *a, void *b){
+  pack *p1 = (pack *)a;
+  pack *p2 = (pack *)b;
+  if(p1->id < p2->id) return -1;
+  else if(p1->id > p2->id) return 1;
+  else return 0;
+}
+
+void iterator_pack(void *data){
+  pack *a = (pack *)data;
+  printf("%d %s\n", a->id, a->toy);
+}
+
+void read_file_to_bst(char *fn, tree *packs){
+  FILE *fin = fopen(fn, "r");
+  while(!feof(fin)){
+    pack *a = malloc(sizeof(pack));
+    fscanf(fin, "%d\t%[^\n]s", &a->id, a->toy);
+    if(a->toy[0] ==  '\0'){
+      printf("%d hasnt have toy yet. Enter the toy name:\n", a->id);
+      scanf("%[^\n]s", a->toy);
+    }
+    tree_insert_bst(&(packs->root), a, packs->elementSize, cmp_id);
+  }
+}
+
+int main(){
+  tree packs;
+  tree_new(&packs, sizeof(pack));
+  int option;
+  do{
+    printf("\n---------------------\n");
+    printf("Santa Clause is comin' to town\n");
+    printf("1.Read A\n");
+    printf("2.Read B\n");
+    printf("3.Seacrch\n");
+    printf("4.Summary\n");
+    printf("5.Analysis\n");
+    printf("6.Bye Bye\n");
+    printf("\n---------------------\n");
+    scanf("%d", &option);
+    switch(option){
+    case 1:{
+      read_file_to_bst("A.txt", &packs);
+      LDR((packs.root), iterator_pack);
+      break; 
+    }
+    case 2:{
+      break;
+    }
+    case 3:{
+      break;
+    }
+    case 4:{
+      break;
+    }
+    case 5:{
+      break;
+    }
+    case 6:{
+      printf("Bye bye\n");
+      break;
+    }
+    default:{
+      printf("Enter one of those options\n");
+      break;
+    }
+    }
+  }while(option != 6);
+}

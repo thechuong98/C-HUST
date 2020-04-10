@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//Array : fixed size when declared => Use dynamically allocate memory (stdlib.h)
+
+//malloc(nbytes)
+
+//Always check whether memory was successfully allocated
+//ex : you want 4 memory blocks , but there are just 3 blocks, it will not successful
+
+//Type casting : 
+//int p = (int )malloc(n*sizeof(int)); // because malloc return void * ;
+//(p points to a dynamic array)
+
+ 

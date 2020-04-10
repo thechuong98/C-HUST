@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+void convert(FILE *IN){
+	int c;
+	while((c = fgetc(IN)) != EOF){
+	  if (c >= 97 && c <= 122){
+	    c = c - 32;
+	    fseek(IN, -1, SEEK_CUR); // current point - 1
+	    fputc(c, IN); 
+	  }
+	}
+}
+
+int main(int argc, const char* argv[]){
+  FILE *IN;
+  char input[100];
+  if (argc == 2){
+    strcpy(input, argv[1]);
+    if((IN = fopen(input, "r+")) == NULL){
+      printf("cannot open file %s\n", input);
+    }
+    else convert(IN);
+    fclose(IN);
+  }
+  else printf("Incorrect form. That should be 'program sourcefile'\n");
+}

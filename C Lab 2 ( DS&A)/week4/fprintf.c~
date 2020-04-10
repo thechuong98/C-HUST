@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <string.h>
+
+void line_count_word(FIlE *IN){
+  int c;
+  int count = 0;
+  while((c = fgetc(IN))!=NULL){
+    while( c != '\n') count++;
+    fputc(IN, count);
+  }
+}
+
+int main(){
+  FILE *IN;
+  char input[100];
+  printf("Enter the file_name");
+  scanf("%s", input);
+  if((IN = fopen(input, "r+")) == NULL) printf("Cannot open the file\n");
+  else 
+}

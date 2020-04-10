@@ -1,0 +1,9 @@
+void data_generate(char *fn){
+  FILE *fin = fopen(fn, "w+");
+  srand(time(NULL));
+  for(int i = 0; i < 200000; ++i){
+    int rand_num = rand()%1000;
+    fprintf(fin, "%d ", rand_num);
+  }
+  fclose(fin);
+}

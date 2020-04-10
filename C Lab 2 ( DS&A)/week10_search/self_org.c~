@@ -1,0 +1,33 @@
+#include "doublylist.c"
+
+node *transpose(node **root, int key){
+  node *keyNode = sentinelSearch(root, key);
+  if(keyNode == NULL) return NULL;
+  node *prevNode = keyNode->prev;
+  int temp = prevNode->val;
+  prevNode->val = keyNode->val;
+  keyNode->val = temp;
+  return prevNode;
+}
+
+node *MTF(node **root, int key){
+  node *keyNode = sentinelSearch(root, key);
+  if(keyNode == NULL) return NULL;
+  node *prevNode = keyNode->prev;
+  prevNode->next = keyNode->next;
+  keyNode->next->prev = prevNode;
+  keyNode->next = *root;
+  keyNode->prev = NULL;
+  *root = keyNode;
+  return keyNode;
+}
+
+int main(){
+  node *root = newNode(5);
+  insertAtTail(root, 3);
+  insertAtTail(root, 4);
+  traversingList(root);
+  MTF(&root, 3);
+  MTF(&root, 5);
+  traversingList(root);
+}
